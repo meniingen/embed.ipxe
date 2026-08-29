@@ -17,7 +17,7 @@ jobs:
       - name: Install build dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y gcc make binutils liblzma-dev genisoimage mtools syslinux-utils xorriso
+          sudo apt-get install -y gcc make binutils liblzma-dev genisoimage mtools syslinux-utils syslinux-common isolinux xorriso
 
       - name: Build ipxe.iso with embedded script
         working-directory: src
