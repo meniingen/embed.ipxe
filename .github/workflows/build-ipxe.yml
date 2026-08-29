@@ -1,0 +1,31 @@
+name: Build iPXE ISO
+
+on:
+  push:
+    paths:
+      - 'src/embed.ipxe'
+      - '.github/workflows/build-ipxe.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc make binutils liblzma-dev genisoimage mtools syslinux-utils xorriso
+
+      - name: Build ipxe.iso with embedded script
+        working-directory: src
+        run: make bin/ipxe.iso EMBED=embed.ipxe
+
+      - name: Upload ISO as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ipxe-iso
+          path: src/bin/ipxe.iso
+          retention-days: 30
