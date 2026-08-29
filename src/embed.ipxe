@@ -1,14 +1,10 @@
 #!ipxe
 
-# Anpassat embed-skript - ersätter default-chain till boot.netboot.xyz
-# och pekar istället mot din självhostade netboot.xyz-app på TrueNAS.
+# Distans-version - används för datorer UTANFÖR hemmanatverket.
+# Anvander publik IP + port forwarding istället för lokal TrueNAS-IP.
 
-set truenas_ip 192.168.10.251
-
-# VIKTIGT: Byt ut 80 nedan mot den port som TrueNAS visar för
-# container-port 80 (wwwroot/http) under Apps > netboot.xyz >
-# Port Forwarding List. Det är INTE samma port som web-UI:t (3000).
-set truenas_port 31011
+set truenas_ip 158.174.149.16
+set truenas_port 8888
 
 echo Startar iPXE - hamtar netboot.xyz-meny fran ${truenas_ip}:${truenas_port}...
 
@@ -18,8 +14,8 @@ chain http://${truenas_ip}:${truenas_port}/menu.ipxe || goto failed
 goto done
 
 :failed
-echo Kunde inte na menyn pa ${truenas_ip}:${truenas_port}
-echo Kontrollera porten i TrueNAS Apps > netboot.xyz
+echo Kunde inte öppna menyn på ${truenas_ip}:${truenas_port}
+echo Kontrollera port forwarding-regeln i routern
 shell
 
 :done
