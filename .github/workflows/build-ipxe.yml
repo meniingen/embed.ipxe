@@ -1,10 +1,10 @@
-name: Build iPXE ISO
+name: Build iPXE ISO (distans)
 
 on:
   push:
     paths:
-      - 'src/embed.ipxe'
-      - '.github/workflows/build-ipxe.yml'
+      - 'src/embed-distans.ipxe'
+      - '.github/workflows/build-ipxe-distans.yml'
   workflow_dispatch:
 
 jobs:
@@ -21,11 +21,11 @@ jobs:
 
       - name: Build ipxe.iso with embedded script
         working-directory: src
-        run: make bin/ipxe.iso EMBED=embed.ipxe
+        run: make bin/ipxe.iso EMBED=embed-distans.ipxe
 
       - name: Upload ISO as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ipxe-iso
+          name: ipxe-iso-distans
           path: src/bin/ipxe.iso
           retention-days: 30
